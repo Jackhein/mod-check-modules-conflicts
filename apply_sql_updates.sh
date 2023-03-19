@@ -11,9 +11,13 @@ read -p "     World table:"$'\n' TABLES['world']
 
 cd ..
 echo "Search for sql updates in modules:"
-for MODULE_NAME in $(ls mod-*/sql/{auth,character,world} 2>/dev/null | grep .*: | sed -e 's/\(\/[^\/]*\)*//g' | sort | uniq); do
+for MODULE_NAME in $(
+  ls mod-*/sql/{auth,character,world} 2>/dev/null | grep .*: | sed -e 's/\(\/[^\/]*\)*//g' | sort | uniq
+); do
   echo ${MODULE_NAME}
-  for TABLE_NAME in $(ls ${MODULE_NAME}/sql/{auth,character,world} 2>/dev/null | grep .*: | sed -e 's/\([^\/]*\/\)*\|://g' | sort | uniq); do
+  for TABLE_NAME in $(
+    ls ${MODULE_NAME}/sql/{auth,character,world} 2>/dev/null | grep .*: | sed -e 's/\([^\/]*\/\)*\|://g' | sort | uniq
+  ); do
     echo ${TABLE_NAME}
     for SQL in $(find ${MODULE_NAME}/sql/${TABLE_NAME}/ -type f -name '*.sql'); do
       while true; do
