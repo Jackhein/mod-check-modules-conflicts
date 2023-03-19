@@ -17,9 +17,9 @@ for MODULE_NAME in $(ls mod-*/sql/{auth,character,world} 2>/dev/null | grep .*: 
     echo ${TABLE_NAME}
     for SQL in $(find ${MODULE_NAME}/sql/${TABLE_NAME}/ -type f -name '*.sql'); do
       while true; do
-        read -p "     Apply sql update from module \"$(echo ${SQL} | sed -e 's/\(\/[^\/]*\)*//g')\" for table \"${TABLES[${TABLE_NAME}]}\" found in \"${MODULE_NAME}\"? Y/n"$'\n' yn
+        read -p "     Apply sql update from module \"$(echo ${SQL} | sed -e 's/\([^\/]*\/\)*//g')\" for table \"${TABLES[${TABLE_NAME}]}\" found in \"${MODULE_NAME}\"? Y/n"$'\n' yn
         case $yn in
-          [Yy]* ) echo "mysql -u${USER} -h${HOST} -D${TABLES[${TABLE_NAME}]} -p${PSWD} < ${SQL}"; break;;
+          [Yy]* ) mysql -u${USER} -h${HOST} -D${TABLES[${TABLE_NAME}]} -p${PSWD} < ${SQL}; break;;
           [Nn]* ) break;;
           * ) echo "Please answer yes or no.";;
         esac;
