@@ -12,8 +12,7 @@ for MODULE_NAME in $(
     while getopts ":y" opt; do
       case $opt in
         y)
-          echo "-a was triggered, Parameter: $OPTARG" >&2
-          ;;
+          git apply --ignore-space-change --ignore-whitespace modules/${MODULE_NAME}/patch/${PATCH_NAME}.patch; break;;
         \?)
           ;;
         :)
