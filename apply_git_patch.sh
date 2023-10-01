@@ -13,9 +13,7 @@ for MODULE_NAME in $(
       case $opt in
         y)
           git apply --ignore-space-change --ignore-whitespace modules/${MODULE_NAME}/patch/${PATCH_NAME}.patch; break;;
-        \?)
-          ;;
-        :)
+        * )
           while true; do
             read -p "     Apply patch ${PATCH_NAME} found in ${MODULE_NAME}? Y/n"$'\n' yn
             case $yn in
