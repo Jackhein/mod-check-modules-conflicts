@@ -34,11 +34,11 @@ fi
 cd ..
 echo "Search for sql updates in modules:"
 for MODULE_NAME in $(
-  ls mod-*/sql/{auth,character,world} 2>/dev/null | grep .*: | sed -e 's/\(\/[^\/]*\)*//g' | sort | uniq
+  ls $(find mod-*/ -type f -name '*.sql') 2>/dev/null | grep -Eo ".*/" | sed -e 's/\/.*//g' | sort | uniq
 ); do
   echo -e "Current module: ${INF}${MODULE_NAME}${END}"
   for DATABASE_PATH in $(
-    ls ${MODULE_NAME}/sql/{auth,character,world} 2>/dev/null | grep .*: | sed -e 's/:$/\//g' | sort | uniq
+    ls $(find ${MODULE_NAME}/ -type d -name '*sql*')/*{auth,character,world}* 2>/dev/null | grep .*: | sed -e 's/:$/\//g' | sort | uniq
   ); do
     DATABASE_NAME=${DATABASES[$(echo ${DATABASE_PATH} | grep -Eo "world|character|auth")]}
     echo -e "\tFor current database: ${INF}${DATABASE_NAME}${END}"
