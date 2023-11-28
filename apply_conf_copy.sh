@@ -34,11 +34,11 @@ for MODULE_NAME in $(
   for MOD_PATH in $(
     find ${MODULE_NAME}/ -type f -name '*.conf.dist'
   ); do
-    CONF_NAME=$(echo ${MOD_PATH} | grep -Eo "[^/].+\.conf\.dist^" | grep -Eo ".*\.conf")
+    CONF_NAME=$(echo ${MOD_PATH} | grep -Eo "[^/]+\.conf\.dist" | grep -Eo ".*\.conf")
     while true; do
-      read -p "$(echo -e "\t\tCopy from module ${INF}\"${MODULE_NAME}\"${END} conf file ${INF}\"${CONF_NAME}\"${END}? ${INF}Y${END}/${INF}n${END}")"$'\n' yn
+      read -p "$(echo -e "\tCopy from module ${INF}\"${MODULE_NAME}\"${END} conf file ${INF}\"${CONF_NAME}\"${END}? ${INF}Y${END}/${INF}n${END}")"$'\n' yn
       case $yn in
-        [Yy]* ) echo "cp ${MOD_PATH} ${PATH}${CONF_NAME}"; break;;
+        [Yy]* ) echo "cp ${MOD_PATH} ${CONF_PATH}${CONF_NAME}"; break;;
         [Nn]* ) break;;
         * ) echo -e "Please answer ${INF}y${END}es or ${INF}n${END}o.";;
       esac;
