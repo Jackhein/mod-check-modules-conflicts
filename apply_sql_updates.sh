@@ -1,9 +1,13 @@
 #/usr/bin/sh
 
+ERR="\e[32m"
+INF="\e[36m"
+END="\e[0m"
+
 help()
 {
    echo ""
-   echo "Usage: $0 -h [database address] -u [user] -p [password] -a [auth database] -c [character database] -w [world database]"
+   echo -e "${INF}Usage: $0 -h [database address] -u [user] -p [password] -a [auth database] -c [character database] -w [world database]${END}"
    exit 1 # Exit script after printing help
 }
 
@@ -23,7 +27,7 @@ done
 
 if (( ${#HOST} == 0 || ${#USER} == 0 || ${#PSWD} == 0 || (${#DATABASES["auth"]} == 0 && ${#DATABASES["character"]} == 0 && ${#DATABASES["world"]} == 0) ))
 then
-   echo "Some or all of the parameters are empty";
+   echo -e "${ERR}Some or all of the parameters are empty${END}";
    help
 fi
 
@@ -32,19 +36,19 @@ echo "Search for sql updates in modules:"
 for MODULE_NAME in $(
   ls mod-*/sql/{auth,character,world} 2>/dev/null | grep .*: | sed -e 's/\(\/[^\/]*\)*//g' | sort | uniq
 ); do
-  echo ${MODULE_NAME}
+  echo -e "${INF}Current module: ${MODULE_NAME}${END}"
   for DATABASE_PATH in $(
     ls ${MODULE_NAME}/sql/{auth,character,world} 2>/dev/null | grep .*: | sed -e 's/:$/\//g' | sort | uniq
   ); do
-    DATABASE_NAME=${DATABASE_PATH} | grep -Eo "auth|world|character"
-    echo ${DATABASE_NAME}
+    DATABASE_NAME=${DATABASES[$(echo ${DATABASE_PATH} | grep -Eo "world|character|auth")]}
+    echo -e "\t${INF}For current database: ${DATABASE_NAME}${END}"
     for SQL in $(find ${DATABASE_PATH}/ -type f -name '*.sql'); do
       while true; do
-	      read -p "     Apply sql update from module \"${MODULE_NAME}\" to database \"${DATABASES[$(echo ${DATABASE_PATH} | grep -Eo "world|character|auth")]}\": \"$(echo ${SQL} | sed -e 's/\([^\/]*\/\)*//g')\"? Y/n"$'\n' yn
+	      read -p "\t\tApply from module ${INF}\"${MODULE_NAME}\"${END} to database ${INF}\"${DATABASES_NAME}\"${END} sql update ${INF}\"$(echo ${SQL} | sed -e 's/\([^\/]*\/\)*//g')\"${END}? Y/n"$'\n' yn
         case $yn in
           [Yy]* ) mysql -u${USER} -h${HOST} -D${DATABASES[${DATABASE_PATH}]} -p${PSWD} < ${SQL}; break;;
           [Nn]* ) break;;
-          * ) echo "Please answer yes or no.";;
+          * ) echo -e "Please answer ${INF}y${END}es or ${INF}n${END}o.";;
         esac;
       done;
     done;
