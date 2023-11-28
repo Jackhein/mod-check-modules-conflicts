@@ -42,11 +42,11 @@ for MODULE_NAME in $(
   ); do
     DATABASE_NAME=${DATABASES[$(echo ${DATABASE_PATH} | grep -Eo "world|character|auth")]}
     echo -e "\tFor current database: ${INF}${DATABASE_NAME}${END}"
-    for SQL in $(find ${DATABASE_PATH}/ -type f -name '*.sql'); do
+    for SQL in $(find ${DATABASE_PATH} -type f -name '*.sql'); do
       while true; do
 	      read -p "$(echo -e "\t\tApply from module ${INF}\"${MODULE_NAME}\"${END} to database ${INF}\"${DATABASE_NAME}\"${END} sql update ${INF}\"$(echo ${SQL} | sed -e 's/\([^\/]*\/\)*//g')\"${END}? ${INF}Y${END}/${INF}n${END}")"$'\n' yn
         case $yn in
-          [Yy]* ) mysql -u${USER} -h${HOST} -D${DATABASES[${DATABASE_PATH}]} -p${PSWD} < ${SQL}; break;;
+          [Yy]* ) mysql -u${USER} -h${HOST} -D${DATABASE_NAME} -p${PSWD} < ${SQL}; break;;
           [Nn]* ) break;;
           * ) echo -e "Please answer ${INF}y${END}es or ${INF}n${END}o.";;
         esac;
