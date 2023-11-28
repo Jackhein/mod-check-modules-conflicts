@@ -38,7 +38,7 @@ for MODULE_NAME in $(
     while true; do
       read -p "$(echo -e "\tCopy from module ${INF}\"${MODULE_NAME}\"${END} conf file ${INF}\"${CONF_NAME}\"${END}? ${INF}Y${END}/${INF}n${END}")"$'\n' yn
       case $yn in
-        [Yy]* ) echo "cp ${MOD_PATH} ${CONF_PATH}${CONF_NAME}"; break;;
+        [Yy]* ) cp ${MOD_PATH} ${CONF_PATH}${CONF_NAME}; break;;
         [Nn]* ) break;;
         * ) echo -e "Please answer ${INF}y${END}es or ${INF}n${END}o.";;
       esac;
