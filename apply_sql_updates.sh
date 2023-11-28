@@ -33,15 +33,16 @@ for MODULE_NAME in $(
   ls mod-*/sql/{auth,character,world} 2>/dev/null | grep .*: | sed -e 's/\(\/[^\/]*\)*//g' | sort | uniq
 ); do
   echo ${MODULE_NAME}
-  for TABLE_NAME in $(
-    ls ${MODULE_NAME}/sql/{auth,character,world} 2>/dev/null | grep .*: | sed -e 's/\([^\/]*\/\)*\|://g' | sort | uniq
+  for DATABASE_PATH in $(
+    ls ${MODULE_NAME}/sql/{auth,character,world} 2>/dev/null | grep .*: | sed -e 's/:$/\//g' | sort | uniq
   ); do
-    echo ${TABLE_NAME}
-    for SQL in $(find ${MODULE_NAME}/sql/${TABLE_NAME}/ -type f -name '*.sql'); do
+    DATABASE_NAME=${DATABASE_PATH} | grep -Eo "auth|world|character"
+    echo ${DATABASE_NAME}
+    for SQL in $(find ${DATABASE_PATH}/ -type f -name '*.sql'); do
       while true; do
-        read -p "     Apply sql update from module \"$(echo ${SQL} | sed -e 's/\([^\/]*\/\)*//g')\" for table \"${DATABASES[${TABLE_NAME}]}\" found in \"${MODULE_NAME}\"? Y/n"$'\n' yn
+	      read -p "     Apply sql update from module \"${MODULE_NAME}\" to database \"${DATABASES[$(echo ${DATABASE_PATH} | grep -Eo "world|character|auth")]}\": \"$(echo ${SQL} | sed -e 's/\([^\/]*\/\)*//g')\"? Y/n"$'\n' yn
         case $yn in
-          [Yy]* ) mysql -u${USER} -h${HOST} -D${DATABASES[${TABLE_NAME}]} -p${PSWD} < ${SQL}; break;;
+          [Yy]* ) mysql -u${USER} -h${HOST} -D${DATABASES[${DATABASE_PATH}]} -p${PSWD} < ${SQL}; break;;
           [Nn]* ) break;;
           * ) echo "Please answer yes or no.";;
         esac;
