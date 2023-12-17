@@ -32,7 +32,7 @@ for MODULE_NAME in $(
 ); do
   echo -e "Current module: ${INF}${MODULE_NAME}${END}"
   for MOD_PATH in $(
-    find ${MODULE_NAME}/ -type f -name '*.dbc$'
+    find ${MODULE_NAME}/ -type f -name '*.dbc'
   ); do
     DBC_NAME=$(echo ${MOD_PATH} | grep -Eo "[^/]+\.dbc")
     while true; do
