@@ -15,11 +15,11 @@ while getopts "p:" opt
 do
    case "$opt" in
       p ) DBC_PATH="$OPTARG" ;;
-      ? ) helpFunction ;; # Print helpFunction in case parameter is non-existent
+      ? ) help ;; # Print helpFunction in case parameter is non-existent
    esac
 done
 
-if ${#DBX_PATH} == 0
+if (( ${#DBC_PATH} == 0 ))
 then
    echo -e "${ERR}Some or all of the parameters are empty${END}";
    help
