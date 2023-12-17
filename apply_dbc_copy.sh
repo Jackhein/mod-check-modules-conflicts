@@ -28,7 +28,7 @@ fi
 cd ..
 echo "Search dbc files in modules:"
 for MODULE_NAME in $(
-  ls $(find mod-*/ -type f -name '*.dbc$') 2>/dev/null | grep -Eo ".*/" | sed -e 's/\/.*//g' | sort | uniq
+  ls $(find mod-*/ -type f -name '*.dbc') 2>/dev/null | grep -Eo ".*/" | sed -e 's/\/.*//g' | sort | uniq
 ); do
   echo -e "Current module: ${INF}${MODULE_NAME}${END}"
   for MOD_PATH in $(
