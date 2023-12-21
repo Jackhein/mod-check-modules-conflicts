@@ -15,11 +15,11 @@ while getopts "p:" opt
 do
    case "$opt" in
       p ) CONF_PATH="$OPTARG" ;;
-      ? ) helpFunction ;; # Print helpFunction in case parameter is non-existent
+      ? ) help ;; # Print helpFunction in case parameter is non-existent
    esac
 done
 
-if ${#CONF_PATH} == 0
+if (( ${#CONF_PATH} == 0 ))
 then
    echo -e "${ERR}Entry a valid path${END}";
    help
