@@ -28,7 +28,7 @@ for MODULE_NAME in $(
         while true; do
           read -p "$(echo -e "\t\tApply from module ${INF}\"${MODULE_NAME}\"${END} to database ${INF}\"${DATABASE_NAME}\"${END} sql update ${INF}\"$(echo ${SQL} | sed -e 's/\([^\/]*\/\)*//g')\"${END}? ${INF}Y${END}/${INF}n${END}")"$'\n' yn
           case $yn in
-              [Yy]* ) cp ${SQL} /wotlk/data/sql/updates/${DATABASE_NAME}; break;;
+              [Yy]* ) cp ${SQL} ../data/sql/custom/${DATABASE_NAME}; break;;
               [Nn]* ) break;;
               * ) echo -e "Please answer ${INF}y${END}es or ${INF}n${END}o.";;
           esac;
