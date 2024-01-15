@@ -9,10 +9,13 @@ DATABASES["auth"]="db_auth"
 DATABASES["character"]="db_characters"
 DATABASES["world"]="db_world"
 
+#Ignore following modules as their path are already checked (see list under apps/ci/ci-install-modules.sh)
+IGNORE_CASE="(mod-eluna|mod-autobalance|mod-ah-bot|mod-anticheat|mod-bg-item-reward|mod-cfbg|mod-chat-transmitter|mod-cta-switch|mod-desertion-warnings|mod-duel-reset|mod-ip-tracker|mod-low-level-arena|mod-low-level-rbg|mod-multi-client-check|mod-pvp-titles|mod-pvpstats-announcer|mod-queue-list-cache|mod-server-auto-shutdown|mod-transmog|mod-progression-system)"
+
 cd ..
 echo "Search for sql updates in modules:"
 for MODULE_NAME in $(
-  ls $(find mod-*/ -type f -name '*.sql') 2>/dev/null | grep -Eo ".*/" | sed -e 's/\/.*//g' | sort | uniq
+  ls $(find mod-*/ -type f -name '*.sql') 2>/dev/null | grep -Eo ".*/" | sed -e 's/\/.*//g' | sort | uniq | grep -vE ${IGNORE_CASE}
 ); do
   echo -e "Current module: ${INF}${MODULE_NAME}${END}"
   for DATABASE_PATH in $(
