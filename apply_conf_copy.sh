@@ -35,7 +35,7 @@ fi
 cd ..
 echo "Search for conf files in modules:"
 for MODULE_NAME in $(
-  ls $(find mod-*/ -type f -name '*conf.dist') 2>/dev/null | grep -Eo ".*/" | sed -e 's/\/.*//g' | sort | uniq | grep -vE ${IGNORE_CASE}
+  ls $(find mod-*/ -type f -regex '.*.conf\(.dist\|\)$') 2>/dev/null | grep -Eo ".*/" | sed -e 's/\/.*//g' | sort | uniq | grep -vE ${IGNORE_CASE}
 ); do
   echo -e "Current module: ${INF}${MODULE_NAME}${END}"
   for MOD_PATH in $(
