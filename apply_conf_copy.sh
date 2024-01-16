@@ -49,7 +49,7 @@ for MODULE_NAME in $(
   for MOD_PATH in $(
     find ${MODULE_NAME}/ -type f -regex '.*.conf\(.dist\|\)$'
   ); do
-    CONF_NAME=$(echo ${MOD_PATH} | grep -Eo "[^/]+\.conf\.dist" | grep -Eo ".*\.conf")
+    CONF_NAME=$(echo ${MOD_PATH} | grep -Eo "[^/]+\.conf(|.dist)$")
     if (( AUTO==1 ))
       then
         echo -e "\tCopy from module ${INF}\"${MODULE_NAME}\"${END} conf file ${INF}\"${CONF_NAME}\"${END}"
