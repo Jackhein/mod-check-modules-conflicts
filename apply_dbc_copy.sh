@@ -17,7 +17,7 @@ help()
    exit 1 # Exit script after printing help
 }
 
-while getopts "p:" opt
+while getopts "p:y" opt
 do
    case "$opt" in
       p ) DBC_PATH="$OPTARG" ;;
