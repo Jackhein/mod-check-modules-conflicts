@@ -47,7 +47,7 @@ for MODULE_NAME in $(
 ); do
   echo -e "Current module: ${INF}${MODULE_NAME}${END}"
   for MOD_PATH in $(
-    find ${MODULE_NAME}/ -type f -name '*.conf.dist'
+    find ${MODULE_NAME}/ -type f -regex '.*.conf\(.dist\|\)$'
   ); do
     CONF_NAME=$(echo ${MOD_PATH} | grep -Eo "[^/]+\.conf\.dist" | grep -Eo ".*\.conf")
     if (( AUTO==1 ))
