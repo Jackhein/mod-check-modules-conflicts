@@ -1,4 +1,4 @@
-#/usr/bin/sh
+#/usr/bin/bash
 
 #Color code
 ERR="\e[31m"

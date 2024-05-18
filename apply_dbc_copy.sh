@@ -1,4 +1,4 @@
-#/usr/bin/sh
+#/usr/bin/bash
 
 ERR="\e[31m"
 INF="\e[36m"

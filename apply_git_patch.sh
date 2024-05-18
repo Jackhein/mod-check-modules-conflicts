@@ -1,4 +1,4 @@
-#/usr/bin/sh
+#/usr/bin/bash
 
 AUTO=0
 while getopts "y" opt; do

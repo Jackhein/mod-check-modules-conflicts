@@ -1,4 +1,4 @@
-#/usr/bin/sh
+#/usr/bin/bash
 
 cd ..
 echo "Check conflicts in DBC update file:";
